@@ -18,6 +18,7 @@ public class BooksStepDefs {
 
     @When("the user navigates to {string} page")
     public void the_user_navigates_to_page(String moduleName) {
+
         new DashBoardPage().navigateModule(moduleName);
     }
 
