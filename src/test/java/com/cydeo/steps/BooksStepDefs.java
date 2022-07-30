@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BooksStepDefs {
-    BookPage bookPage=new BookPage();
+    BookPage bookPage = new BookPage();
     List<String> actualCategoryList;
 
 
@@ -25,7 +25,7 @@ public class BooksStepDefs {
 
     @When("the user gets all book categories in webpage")
     public void the_user_gets_all_book_categories_in_webpage() {
-        actualCategoryList=BrowserUtil.getAllSelectOptions(bookPage.mainCategoryElement);
+        actualCategoryList = BrowserUtil.getAllSelectOptions(bookPage.mainCategoryElement);
         actualCategoryList.remove(0);
         System.out.println("expectedCategoryList = " + actualCategoryList);
     }
@@ -48,4 +48,18 @@ public class BooksStepDefs {
 
     }
 
+
+    @Then("verify book categories must match book categories table from db")
+    public void verify_book_categories_must_match_book_categories_table_from_db() {
+
+        String query = "select name from book_categories";
+        DB_Util.runQuery(query);
+
+        //store data
+        List<String> expectedCategoryList = DB_Util.getColumnDataAsList(1);
+
+        //assertion
+        Assert.assertEquals(expectedCategoryList, actualCategoryList);
+
+    }
 }
