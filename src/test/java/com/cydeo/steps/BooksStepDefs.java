@@ -4,6 +4,7 @@ import com.cydeo.pages.BookPage;
 import com.cydeo.pages.DashBoardPage;
 import com.cydeo.utility.BrowserUtil;
 import com.cydeo.utility.DB_Util;
+import com.github.javafaker.Code;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
@@ -66,6 +67,37 @@ public class BooksStepDefs {
     @Then("book information must match the database for {string}")
     public void book_information_must_match_the_database_for(String bookName) {
 
+        BrowserUtil.waitFor(3);
+
+        //get data from UI
+        String actualBookName = bookPage.bookName.getAttribute("value");
+        String actualAuthorName = bookPage.author.getAttribute("value");
+        String actualISBN = bookPage.isbn.getAttribute("value");
+        String actualYear = bookPage.year.getAttribute("value");
+        String actualDescription = bookPage.description.getAttribute("value");
+
+        System.out.println(actualBookName);
+        System.out.println(actualAuthorName);
+
+        //get related book from DB
+        String query="select name,author,isbn,description,year from books\n" +
+                "where name='"+bookName+"'";
+        DB_Util.runQuery(query);
+
+        Map<String,String> rowMap = DB_Util.getRowMap(1);
+
+        String expectedBookName = rowMap.get("name");
+        String expectedAuthorName = rowMap.get("author");
+        String expectedISBN = rowMap.get("isbn");
+        String expectedDesc = rowMap.get("description");
+        String expectedYear = rowMap.get("year");
+
+        //Assertion
+        Assert.assertEquals(expectedBookName,actualBookName);
+        Assert.assertEquals(expectedAuthorName,actualAuthorName);
+        Assert.assertEquals(expectedISBN,actualISBN);
+        Assert.assertEquals(expectedDesc,actualDescription);
+        Assert.assertEquals(expectedYear,actualYear);
 
 
     }

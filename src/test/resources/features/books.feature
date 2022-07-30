@@ -34,7 +34,7 @@ Feature: Book Category
     And the user gets all book categories in webpage
     Then verify book categories must match book categories table from db
 
-  @wip
+  @wip@db
   Scenario: Verify book information with db
     Given the user logged in as "librarian"
     And the user navigates to "Books" page
