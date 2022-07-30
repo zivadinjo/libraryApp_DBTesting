@@ -41,7 +41,7 @@ public class DashboardStepDefs
 
         //1. Make a connection
 
-        DB_Util.createConnection();
+        //DB_Util.createConnection(); --> We added @Before in Hooks to create conn
 
             //USERS
 
@@ -77,7 +77,7 @@ public class DashboardStepDefs
 
         //5. Close a connection
 
-        DB_Util.destroy();
+        //DB_Util.destroy(); --> We created @After in hooks to bi run and destroy conn
 
     }
 }

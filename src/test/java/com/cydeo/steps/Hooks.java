@@ -37,7 +37,7 @@ public class Hooks {
 
     }
 
-    @Before
+    @Before("@db")
     public void setupDB (){
 
         DB_Util.createConnection();
@@ -45,7 +45,7 @@ public class Hooks {
 
     }
 
-    @After
+    @After("@db")
     public void destroyDB (){
 
         DB_Util.destroy();
